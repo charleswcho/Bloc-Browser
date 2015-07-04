@@ -116,6 +116,12 @@
     
     NSURL *URL = [NSURL URLWithString:URLString];
     
+    if ([URLString rangeOfString:@" "].location != NSNotFound) {
+        NSString *plusReplace = [URLString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+        URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://google.com/search?q=<%@ query", plusReplace]];
+    
+    }
+    
     if (!URL.scheme) {
         // The user didn't type http: or https:
         URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", URLString]];
@@ -124,6 +130,7 @@
     if (URL) {
         NSURLRequest *request = [NSURLRequest requestWithURL:URL];
         [self.webView loadRequest:request];
+    
     }
     
     return NO;
