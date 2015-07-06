@@ -131,6 +131,19 @@
     }
 }
 
+- (void) viewDidAppear:(BOOL)animated {
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Welcome!"
+                                                                   message:@"Here we go!"
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {}];
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+
 
 #pragma mark - UITextFieldDelegate
 
