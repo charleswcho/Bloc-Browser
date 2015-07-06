@@ -116,15 +116,15 @@
     
     NSURL *URL = [NSURL URLWithString:URLString];
     
-    if ([URLString rangeOfString:@" "].location != NSNotFound) {
-        NSString *plusReplace = [URLString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-        URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://google.com/search?q=<%@ query", plusReplace]];
-    
-    }
-    
     if (!URL.scheme) {
+        if ([URLString rangeOfString:@" "].location != NSNotFound) {
+            NSString *plusReplace = [URLString stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+            URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://google.com/search?q=%@", plusReplace]];
+            
+        } else {
         // The user didn't type http: or https:
         URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", URLString]];
+        }
     }
     
     if (URL) {
