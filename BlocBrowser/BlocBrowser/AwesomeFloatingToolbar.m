@@ -63,9 +63,10 @@
         }
         
         // #2
-        [self addGestureRecognizer:self.tapGesture];
         self.panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panFired:)];
         [self addGestureRecognizer:self.panGesture];
+        self.longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(panFired:)];
+        [self addGestureRecognizer:self.longGesture];
 
     }
     
