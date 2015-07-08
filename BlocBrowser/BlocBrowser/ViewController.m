@@ -76,13 +76,14 @@
     
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicator];
-
     
     // Do any additional setup after loading the view.
 }
 
-- (void) viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
+//- (void) viewWillLayoutSubviews {
+- (void) viewWillAppear:(BOOL)animated {
+//    [super viewWillLayoutSubviews];
+        [super viewWillAppear:animated];
     
     // First, calculate some dimensions.
     static const CGFloat itemHeight = 50;
@@ -117,6 +118,17 @@
     CGPoint newPoint = CGPointMake(startingPoint.x + offset.x, startingPoint.y + offset.y);
     
     CGRect potentialNewFrame = CGRectMake(newPoint.x, newPoint.y, CGRectGetWidth(toolbar.frame), CGRectGetHeight(toolbar.frame));
+    
+    if (CGRectContainsRect(self.view.bounds, potentialNewFrame)) {
+        toolbar.frame = potentialNewFrame;
+    }
+}
+
+- (void) floatingToolbar:(AwesomeFloatingToolbar *)toolbar didTryToPinchWithScale:(CGFloat)scale{
+    CGSize startingPoint = toolbar.frame.size;
+    CGSize newPoint = CGSizeMake(startingPoint.width * scale, startingPoint.height *scale);
+    
+    CGRect potentialNewFrame = CGRectMake(toolbar.frame.origin.x, toolbar.frame.origin.y, newPoint.width, newPoint.height);
     
     if (CGRectContainsRect(self.view.bounds, potentialNewFrame)) {
         toolbar.frame = potentialNewFrame;
